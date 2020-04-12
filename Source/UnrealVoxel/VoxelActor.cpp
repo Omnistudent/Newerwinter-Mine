@@ -30,10 +30,14 @@ AVoxelActor::AVoxelActor()
 	{
 		gameInstance = Cast<UVoxelGameInstance>(GetGameInstance());
 		randomSeed = gameInstance->randomSeed;
-		//firstmultiplier = gameInstance->randomSeed;
+		
+
+		// Getting noise multiplier values from voxelactor created in addchunk
 		firstmultiplier = gameInstance->firstmultiplier;
-		//multiplier2 = gameInstance->multiplier2;
-		//firstmultiplier = 16.0;
+		noisemultiplier2 = gameInstance->noisemultiplier2;
+		noisemultiplier3 = gameInstance->noisemultiplier3;
+		noisemultiplier4 = gameInstance->noisemultiplier4;
+
 	
 		
 		if (gameInstance->customSettings.Num() > 0 && gameInstance->customSettings[3] == 1)
@@ -41,7 +45,17 @@ AVoxelActor::AVoxelActor()
 			Materials[0] = leavesMaterialRounded; // replace material for rounded one
 		}
 
-		
+
+		// Trying to extract values from settings
+		// Setting playerspeed2 to middle will now give noise values 4
+		if (gameInstance->customSettings.Num() > 0 && gameInstance->customSettings[6] == 1)
+		{
+			
+			firstmultiplier = 4;
+			noisemultiplier2 = 4;
+			noisemultiplier3 = 4;
+			noisemultiplier4 = 4;
+		}
 		
 		
 
@@ -385,11 +399,19 @@ TArray<int32> AVoxelActor::calculateNoise()
 		{
 	
 			float noiseValue = 
-			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) *  4+ 
-			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) * 8 +
-			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.004f, (chunkYindex*chunkLineElements + y) * 0.004f) * firstmultiplier +
-			FMath::Clamp(USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.05f, (chunkYindex*chunkLineElements + y) * 0.05f), 0.0f, 5.0f) * 4; // clamp 0-5
+			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) *  firstmultiplier+ 
+			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) * noisemultiplier2 +
+			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.004f, (chunkYindex*chunkLineElements + y) * 0.004f) * noisemultiplier3 +
+			FMath::Clamp(USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.05f, (chunkYindex*chunkLineElements + y) * 0.05f), 0.0f, 5.0f) * noisemultiplier4; // clamp 0-5
 			noises.Add(FMath::FloorToInt(noiseValue));
+
+			// Earlier version, with numbers in formula
+			
+			//USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) * 4 +
+			//	USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) * 8 +
+			//	USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.004f, (chunkYindex*chunkLineElements + y) * 0.004f) * firstmultiplier +
+			//	FMath::Clamp(USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.05f, (chunkYindex*chunkLineElements + y) * 0.05f), 0.0f, 5.0f) * 4; // clamp 0-5
+			//noises.Add(FMath::FloorToInt(noiseValue));
 		}
 	}
 	return noises;

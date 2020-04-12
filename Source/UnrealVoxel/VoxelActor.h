@@ -47,8 +47,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	int32 chunkLineElements = 1; //was 10 doesnt matter
 
+
+	// added noise multipliers to voxelactor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	float firstmultiplier = 16.0; //was 16
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	float noisemultiplier2 = 16.0; //was 16
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	float noisemultiplier3 = 16.0; //was 16
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	float noisemultiplier4 = 16.0; //was 16
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	int32 chunkXindex = 0;

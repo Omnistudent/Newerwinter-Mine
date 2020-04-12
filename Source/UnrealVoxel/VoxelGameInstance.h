@@ -41,8 +41,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 randomSeed = 0;
 
+	// added to noise multipliers
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float firstmultiplier = 14.0;
+	float firstmultiplier = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float noisemultiplier2 = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float noisemultiplier3 = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float noisemultiplier4 = 0.0;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString randomSeedName;

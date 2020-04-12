@@ -12,7 +12,8 @@
 #include "Engine.h"
 #include "NoExportTypes.h"
 
-int32 settings[] = { 0, 0, 1, 0, 0, 0,13 };
+// added an extra element to this array
+int32 settings[] = { 0, 0, 1, 0, 0, 0, 0 };
 
 void UVoxelGameInstance::Init()
 {
