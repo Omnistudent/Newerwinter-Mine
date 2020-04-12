@@ -12,7 +12,7 @@
 #include "Engine.h"
 #include "NoExportTypes.h"
 
-int32 settings[] = { 0, 0, 1, 0, 0, 0 };
+int32 settings[] = { 0, 0, 1, 0, 0, 0,13 };
 
 void UVoxelGameInstance::Init()
 {

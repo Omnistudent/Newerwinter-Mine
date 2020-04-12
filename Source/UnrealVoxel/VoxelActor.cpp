@@ -30,11 +30,22 @@ AVoxelActor::AVoxelActor()
 	{
 		gameInstance = Cast<UVoxelGameInstance>(GetGameInstance());
 		randomSeed = gameInstance->randomSeed;
+		//firstmultiplier = gameInstance->randomSeed;
+		firstmultiplier = gameInstance->firstmultiplier;
+		//multiplier2 = gameInstance->multiplier2;
+		//firstmultiplier = 16.0;
+	
 		
 		if (gameInstance->customSettings.Num() > 0 && gameInstance->customSettings[3] == 1)
 		{
 			Materials[0] = leavesMaterialRounded; // replace material for rounded one
 		}
+
+		
+		
+		
+
+		
 	}
 	for (TActorIterator<AVoxelAdministration> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
@@ -93,7 +104,6 @@ void AVoxelActor::GenerateChunk()
 				else if (z == 29 + noise[x + y * chunkLineElementsExt]) chunkFields[index] = 12;
 				else if (z < 29 + noise[x + y * chunkLineElementsExt]) chunkFields[index] = 13;
 				else chunkFields[index] = 0;
-
 				//int32 index = x + (y * chunkLineElements) + (z * chunkLineElementsP2);
 				//chunkFields[index] = (z == 29 + noise[x + y * chunkLineElements]) ? 1 : 0;
 				//if (z == 28 + noise[x + y * chunkLineElements]) chunkFields[index] = 2;
@@ -373,10 +383,11 @@ TArray<int32> AVoxelActor::calculateNoise()
 	{
 		for (int32 x = -1; x <= chunkLineElements; x++)
 		{
+	
 			float noiseValue = 
-			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) * 4 +
+			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) *  4+ 
 			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.01f, (chunkYindex*chunkLineElements + y) * 0.01f) * 8 +
-			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.004f, (chunkYindex*chunkLineElements + y) * 0.004f) * 16 +
+			USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.004f, (chunkYindex*chunkLineElements + y) * 0.004f) * firstmultiplier +
 			FMath::Clamp(USimplexNoiseLibrary::SimplexNoise2D((chunkXindex*chunkLineElements + x) * 0.05f, (chunkYindex*chunkLineElements + y) * 0.05f), 0.0f, 5.0f) * 4; // clamp 0-5
 			noises.Add(FMath::FloorToInt(noiseValue));
 		}

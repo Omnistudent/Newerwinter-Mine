@@ -45,7 +45,10 @@ public:
 	int32 voxelSize = 200;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
-	int32 chunkLineElements = 10;
+	int32 chunkLineElements = 1; //was 10 doesnt matter
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
+	float firstmultiplier = 16.0; //was 16
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (ExposeOnSpawn = true))
 	int32 chunkXindex = 0;

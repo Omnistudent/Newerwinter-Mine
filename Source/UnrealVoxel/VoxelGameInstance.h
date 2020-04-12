@@ -42,6 +42,9 @@ public:
 	int32 randomSeed = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float firstmultiplier = 14.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString randomSeedName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
